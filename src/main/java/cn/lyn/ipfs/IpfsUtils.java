@@ -28,15 +28,19 @@ public class IpfsUtils {
      */
     public static java.lang.String ipfsUpload(String fileName) throws IOException {
 
+        //根据文件名创建一个文件并往文件中写入信息
         NamedStreamable.ByteArrayWrapper file = new NamedStreamable.ByteArrayWrapper("hello_001.txt", "这是一个ipfs文件上传测试！！！".getBytes());
+
+        //上传文件并获取返回的hashcode值
         MerkleNode addResult = ipfs.add(file).get(0);
         return addResult.hash+"";
     }
 
     public static void get(String hashcode) throws IOException {
+        //通过文件hashcode值获取文件节点信息
         Multihash filePointer = Multihash.fromBase58(hashcode);
-        byte[] fileContents = ipfs.cat(filePointer);
-        String string = new String(fileContents);
+        byte[] fileContents = ipfs.cat(filePointer); //读取节点上的文件信息
+        String string = new String(fileContents); //文件转换成字符串信息
         System.out.println(string);
     }
 
